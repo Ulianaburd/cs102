@@ -49,6 +49,10 @@ def match_case_calc(command: str, num_1: float, num_2: float = 0) -> tp.Union[fl
             return math.cos(num_1)
         case "tan":
             return math.tan(num_1)
+
+
+
+        
         case "log10":
             return math.log10(num_1)
         case _:
