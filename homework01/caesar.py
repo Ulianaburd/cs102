@@ -1,19 +1,19 @@
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     """
-       Encrypts plaintext using a Caesar cipher.
+    Encrypts plaintext using a Caesar cipher.
 
-       >>> encrypt_caesar("PYTHON")
-       'SBWKRQ'
-       >>> encrypt_caesar("python")
-       'sbwkrq'
-       >>> encrypt_caesar("Python3.6")
-       'Sbwkrq3.6'
-       >>> encrypt_caesar("")
-       ''
-       """
-    alf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    >>> encrypt_caesar("PYTHON")
+    'SBWKRQ'
+    >>> encrypt_caesar("python")
+    'sbwkrq'
+    >>> encrypt_caesar("Python3.6")
+    'Sbwkrq3.6'
+    >>> encrypt_caesar("")
+    ''
+    """
+    alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     alf_low = alf.lower()
-    ciphertext = ''
+    ciphertext = ""
     for i in plaintext:
         if i in alf:
             m = alf.index(i)

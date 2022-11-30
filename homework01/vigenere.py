@@ -1,4 +1,4 @@
-from homework01.caesar import encrypt_caesar, decrypt_caesar
+from homework01.caesar import decrypt_caesar, encrypt_caesar
 
 
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
@@ -13,11 +13,12 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    alf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     keyword = keyword.upper()
     for i in range(len(plaintext)):
         shift = alf.index(
-            keyword[i % len(keyword)])  # вычисление сдвига для конкретной буквы (повторение ключевого слова)
+            keyword[i % len(keyword)]
+        )  # вычисление сдвига для конкретной буквы (повторение ключевого слова)
         ciphertext += encrypt_caesar(plaintext[i], shift)
     return ciphertext
 
@@ -34,7 +35,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    alf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     keyword = keyword.upper()
     for i in range(len(ciphertext)):
         shift = alf.index(keyword[i % len(keyword)])

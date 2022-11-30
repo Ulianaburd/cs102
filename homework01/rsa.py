@@ -13,7 +13,7 @@ def is_prime(n: int) -> bool:
     """
     if n <= 1:
         return False
-    for i in range(2, int(n ** 0.5) + 1):
+    for i in range(2, int(n**0.5) + 1):
         if n % i == 0:
             return False
     return True
@@ -21,9 +21,9 @@ def is_prime(n: int) -> bool:
 
 def generate_keypair(p: int, q: int) -> Tuple[Tuple[int, int], Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
-        raise ValueError('Both numbers must be prime.')
+        raise ValueError("Both numbers must be prime.")
     elif p == q:
-        raise ValueError('p and q cannot be equal')
+        raise ValueError("p and q cannot be equal")
 
     n = p * q
 
