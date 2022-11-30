@@ -1,20 +1,30 @@
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
+    """
+       Encrypts plaintext using a Caesar cipher.
+
+       >>> encrypt_caesar("PYTHON")
+       'SBWKRQ'
+       >>> encrypt_caesar("python")
+       'sbwkrq'
+       >>> encrypt_caesar("Python3.6")
+       'Sbwkrq3.6'
+       >>> encrypt_caesar("")
+       ''
+       """
     ciphertext = ""
-    alf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     alf_low = alf.lower()
-    shift = int(3)
-    plaintext = input(str())
     ciphertext = ''
     for i in plaintext:
-        m = alf.find(i)
-        n = m + shift
         if i in alf:
+            m = alf.index(i)
+            n = (m + shift) % 26
             ciphertext += alf[n]
-        else:
-            ciphertext += i
-    print(ciphertext)
+        elif i in alf_low:
+            m = alf_low.index(i)
+            n = (m + shift) % 26
+            ciphertext += alf_low[n]
     return ciphertext
-
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     """
@@ -29,17 +39,15 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    alf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     alf_low = alf.lower()
-    shift = int(3)
-    ciphertext = input(str())
-    plaintext = ''
     for i in ciphertext:
-        m = alf.find(i)
-        n = m - shift
         if i in alf:
-            plaintext += alf[n]
-        else:
-            plaintext += i
-    print(plaintext)
+            m = alf.index(i)
+            n = (m - shift) % 26
+            ciphertext += alf[n]
+        elif i in alf_low:
+            m = alf_low.index(i)
+            n = (m - shift) % 26
+            ciphertext += alf_low[n]
     return plaintext
