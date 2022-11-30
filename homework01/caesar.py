@@ -11,7 +11,6 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
        >>> encrypt_caesar("")
        ''
        """
-    ciphertext = ""
     alf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     alf_low = alf.lower()
     ciphertext = ''
@@ -42,19 +41,4 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     >>> decrypt_caesar("")
     ''
     """
-    plaintext = ""
-    alf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    alf_low = alf.lower()
-    for i in ciphertext:
-        if i in alf:
-            m = alf.index(i)
-            n = (m - shift) % 26
-            plaintext += alf[n]
-        elif i in alf_low:
-            m = alf_low.index(i)
-            n = (m - shift) % 26
-            plaintext += alf_low[n]
-        else:
-            plaintext += i
-
-    return plaintext
+    return encrypt_caesar(ciphertext, -shift)
