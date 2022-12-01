@@ -11,18 +11,17 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
-    alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    alf_low = alf.lower()
+
     ciphertext = ""
     for i in plaintext:
-        if i in alf:
-            m = alf.index(i)
-            n = (m + shift) % 26
-            ciphertext += alf[n]
-        elif i in alf_low:
-            m = alf_low.index(i)
-            n = (m + shift) % 26
-            ciphertext += alf_low[n]
+        if i.isupper():
+            alf_shift = ord(i) - ord("A")
+            new = (alf_shift + shift) % 26 + ord("A")
+            ciphertext += chr(new)
+        elif i.islower():
+            alf_shift = ord(i) - ord("a")
+            new = (alf_shift + shift) % 26 + ord("a")
+            ciphertext += chr(new)
         else:
             ciphertext += i
 
