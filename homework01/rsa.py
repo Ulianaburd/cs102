@@ -2,7 +2,7 @@ import random
 from typing import Tuple
 
 
-def is_prime(n: int) -> bool:
+def is_prime(new: int) -> bool:
     """
     >>> is_prime(2)
     True
@@ -11,10 +11,10 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    if n <= 1:
+    if new <= 1:
         return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
+    for i in range(2, new // 2 + 1):
+        if new % i == 0:
             return False
     return True
 
@@ -25,7 +25,7 @@ def generate_keypair(p: int, q: int) -> Tuple[Tuple[int, int], Tuple[int, int]]:
     elif p == q:
         raise ValueError("p and q cannot be equal")
 
-    n = p * q
+    new = p * q
 
     phi = (p - 1) * (q - 1)
 
@@ -41,8 +41,8 @@ def generate_keypair(p: int, q: int) -> Tuple[Tuple[int, int], Tuple[int, int]]:
     # Use Extended Euclid's Algorithm to generate the private key
     d = multiplicative_inverse(e, phi)
     # Return public and private keypair
-    # Public key is (e, n) and private key is (d, n)
-    return ((e, n), (d, n))
+    # Public key is (e, new) and private key is (d, new)
+    return ((e, new), (d, new))
 
 
 def gcd(a: int, b: int) -> int:
@@ -62,9 +62,15 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    if phi == 1:
+    n_1 = 0
+    n_2 = 1
+    pr = phi
+    while e != 0:
+        d = pr // e
+        n_1, n_2 = n_2, n_1 - d * n_2
+        pr, e = e, pr - d * e
+    if pr > 1:
         return 0
-    for i in range(1, phi + 1):
-        if (i * e) % phi == 1:
-            return i
-    return 1
+    if n_1 < 0:
+        n_1 = n_1 + phi
+    return n_1
