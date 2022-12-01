@@ -1,53 +1,6 @@
-def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
-    """
-    Encrypts plaintext using a Caesar cipher.
-
-    >>> encrypt_caesar("PYTHON")
-    'SBWKRQ'
-    >>> encrypt_caesar("python")
-    'sbwkrq'
-    >>> encrypt_caesar("Python3.6")
-    'Sbwkrq3.6'
-    >>> encrypt_caesar("")
-    ''
-    """
-    alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    alf_low = alf.lower()
-    ciphertext = ""
-    for i in plaintext:
-        if i in alf:
-            m = alf.index(i)
-            n = (m + shift) % 26
-            ciphertext += alf[n]
-        elif i in alf_low:
-            m = alf_low.index(i)
-            n = (m + shift) % 26
-            ciphertext += alf_low[n]
-        else:
-            ciphertext += i
-
-    return ciphertext
-
-
-def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
-    """
-    Decrypts a ciphertext using a Caesar cipher.
-    >>> decrypt_caesar("SBWKRQ")
-    'PYTHON'
-    >>> decrypt_caesar("sbwkrq")
-    'python'
-    >>> decrypt_caesar("Sbwkrq3.6")
-    'Python3.6'
-    >>> decrypt_caesar("")
-    ''
-    """
-    return encrypt_caesar(ciphertext, -shift)
-
-
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     Encrypts plaintext using a Vigenere cipher.
-
     >>> encrypt_vigenere("PYTHON", "A")
     'PYTHON'
     >>> encrypt_vigenere("python", "a")
@@ -56,20 +9,26 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    keyword = keyword.upper()
-    for i in range(len(plaintext)):
-        shift = alf.index(
-            keyword[i % len(keyword)]
-        )  # вычисление сдвига для конкретной буквы (повторение ключевого слова)
-        ciphertext += encrypt_caesar(plaintext[i], shift)
+    key_length = len(keyword)
+    key_as_int = [ord(i) for i in keyword]
+    plaintext_int = [ord(i) for i in plaintext]
+
+    for i in range(len(plaintext_int)):
+        if "A" <= plaintext[i] <= "Z":
+            value = (plaintext_int[i] + key_as_int[i % key_length]) % 26
+            ciphertext += chr(value + 65)
+        elif "a" <= plaintext[i] <= "z":
+            value = (plaintext_int[i] + key_as_int[i % key_length] - 2 * ord("a")) % 26
+            ciphertext += chr(value + 97)
+        else:
+            value = ord(plaintext[i])
+            ciphertext = str(ciphertext) + str(chr(value))
     return ciphertext
 
 
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     """
     Decrypts a ciphertext using a Vigenere cipher.
-
     >>> decrypt_vigenere("PYTHON", "A")
     'PYTHON'
     >>> decrypt_vigenere("python", "a")
@@ -78,9 +37,18 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    keyword = keyword.upper()
-    for i in range(len(ciphertext)):
-        shift = alf.index(keyword[i % len(keyword)])
-        plaintext += decrypt_caesar(ciphertext[i], shift)
+    key_length = len(keyword)
+    key_as_int = [ord(i) for i in keyword]
+    ciphertext_int = [ord(i) for i in ciphertext]
+
+    for i in range(len(ciphertext_int)):
+        if "A" <= ciphertext[i] <= "Z":
+            value = (ciphertext_int[i] - key_as_int[i % key_length]) % 26
+            plaintext += chr(value + 65)
+        elif "a" <= ciphertext[i] <= "z":
+            value = (ciphertext_int[i] - key_as_int[i % key_length]) % 26
+            plaintext += chr(value + 97)
+        else:
+            value = ord(ciphertext[i])
+            plaintext += str(chr(value))
     return plaintext
