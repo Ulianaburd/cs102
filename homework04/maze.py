@@ -9,23 +9,27 @@ def create_grid(rows: int = 15, cols: int = 15) -> List[List[Union[str, int]]]:
     return [["■"] * cols for _ in range(rows)]
 
 
+
 def remove_wall(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> List[List[Union[str, int]]]:
 
-    direction = choice(("up", "right"))
-
-    if coord[0] == 1:
-        direction = "right"
-    elif coord[1] == len(grid[0]) - 2:
-        direction = "up"
-
-    elif direction == "up" and coord[0] == 1:
-        return grid
-
-    x1, y1 = (coord[0] - 1, coord[1]) if direction == "up" else (coord[0], coord[1] + 1)
-    grid[x1][y1] = " "
+    y, x = coord
+    direction = choice([0, 1])  # 0 is up, 1 is right
+    if direction == 0:
+        if y == 1 and x != len(grid) - 2:
+            grid[y][x + 1] = " "
+        elif y == 1 and x == len(grid) - 2:  #  случай, если мы попадаем в угол
+            pass
+        else:
+            grid[y - 1][x] = " "
+    else:
+        if x == len(grid) - 2 and y != 1:
+            grid[y - 1][x] = " "
+        elif x == len(grid) - 2:
+            pass
+        else:
+            grid[y][x + 1] = " "
 
     return grid
-
 
 def bin_tree_maze(rows: int = 15, cols: int = 15, random_exit: bool = True) -> List[List[Union[str, int]]]:
 
@@ -72,9 +76,7 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
     return grid
 
 
-def shortest_path(
-    grid: List[List[Union[str, int]]], exit: Tuple[int, int]
-) -> Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]:
+def shortest_path(grid: List[List[Union[str, int]]], exit: Tuple[int, int]) -> Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]:
 
     k = grid[exit[0]][exit[1]]
     path: Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]
