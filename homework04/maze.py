@@ -2,12 +2,11 @@ from copy import deepcopy
 from random import choice, randint
 from typing import List, Optional, Tuple, Union
 
-import pandas as pd
+import pandas as pd  # type: ignore
 
 
 def create_grid(rows: int = 15, cols: int = 15) -> List[List[Union[str, int]]]:
     return [["■"] * cols for _ in range(rows)]
-
 
 
 def remove_wall(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> List[List[Union[str, int]]]:
@@ -30,6 +29,7 @@ def remove_wall(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> Li
             grid[y][x + 1] = " "
 
     return grid
+
 
 def bin_tree_maze(rows: int = 15, cols: int = 15, random_exit: bool = True) -> List[List[Union[str, int]]]:
 
@@ -76,7 +76,9 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
     return grid
 
 
-def shortest_path(grid: List[List[Union[str, int]]], exit: Tuple[int, int]) -> Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]:
+def shortest_path(
+    grid: List[List[Union[str, int]]], exit: Tuple[int, int]
+) -> Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]:
 
     k = grid[exit[0]][exit[1]]
     path: Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]
