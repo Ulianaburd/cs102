@@ -24,14 +24,14 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> grid:
         if randomize:
-            arr = []
+            arr = []  # type: ignore
             for i in range(0, self.rows):
                 arr.append([])
                 for j in range(0, self.cols):
                     arr[i].append(random.randint(0, 1))
             return arr
         else:
-            arr = []
+            arr = []  # type: ignore
             for i in range(0, self.rows):
                 arr.append([])
                 for j in range(0, self.cols):
