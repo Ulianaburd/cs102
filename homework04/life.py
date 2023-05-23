@@ -8,6 +8,7 @@ cell = Tuple[int, int]
 cells = List[int]
 grid = List[cells]
 
+
 class GameOfLife:
     def __init__(
         self,
@@ -23,17 +24,17 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> grid:
         if randomize:
-            arr=[]
-            for i in range(0,self.rows):
+            arr = []
+            for i in range(0, self.rows):
                 arr.append([])
-                for j in range(0,self.cols):
-                    arr[i].append(random.randint(0,1))
+                for j in range(0, self.cols):
+                    arr[i].append(random.randint(0, 1))
             return arr
         else:
-            arr=[]
-            for i in range(0,self.rows):
+            arr = []
+            for i in range(0, self.rows):
                 arr.append([])
-                for j in range(0,self.cols):
+                for j in range(0, self.cols):
                     arr[i].append(0)
             return arr
 
@@ -77,7 +78,7 @@ class GameOfLife:
     @property
     def is_max_generations_exceeded(self) -> bool:
         if self.max_generations:
-            if self.generations>=self.max_generations:
+            if self.generations >= self.max_generations:
                 return True
             else:
                 return False
@@ -94,13 +95,13 @@ class GameOfLife:
         with open(filename) as f:
             lines = f.readlines()
             height = len(lines)
-            arr=[]
+            arr = []
             for i in lines[0]:
                 if i.isdigit():
                     arr.append(i)
             width = len(arr)
             for line in lines:
-                new_row=[]
+                new_row = []
                 for i in line:
                     if i.isdigit():
                         new_row.append(int(i))

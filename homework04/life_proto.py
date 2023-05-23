@@ -9,6 +9,7 @@ cell = tp.Tuple[int, int]
 Cells = tp.List[int]
 Grid = tp.List[Cells]
 
+
 class GameOfLife:
     def __init__(self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10) -> None:
         self.width = width
@@ -48,17 +49,17 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
-            arr=[]
-            for i in range(0,self.cell_height):
+            arr = []
+            for i in range(0, self.cell_height):
                 arr.append([])
-                for j in range(0,self.cell_width):
-                    arr[i].append(random.randint(0,1))
+                for j in range(0, self.cell_width):
+                    arr[i].append(random.randint(0, 1))
             return arr
         else:
-            arr=[]
-            for i in range(0,self.cell_height):
+            arr = []
+            for i in range(0, self.cell_height):
                 arr.append([])
-                for j in range(0,self.cell_width):
+                for j in range(0, self.cell_width):
                     arr[i].append(0)
             return arr
 

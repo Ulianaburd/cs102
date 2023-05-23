@@ -1,4 +1,5 @@
 import pygame
+
 from life import GameOfLife
 from ui import UI
 
@@ -22,8 +23,8 @@ class GUI(UI):
             pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.screen_size[0], y))
 
     def draw_grid(self) -> None:
-        for y in range(0,self.life.rows):
-            for x in range(0,self.life.cols):
+        for y in range(0, self.life.rows):
+            for x in range(0, self.life.cols):
                 if self.life.curr_generation[y][x] == 1:
                     color = pygame.Color("green")
                 else:

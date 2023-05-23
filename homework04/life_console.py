@@ -14,7 +14,7 @@ class Console(UI):
 
     def draw_grid(self, screen) -> None:
         for num, row in enumerate(self.life.curr_generation):
-            arr=[]
+            arr = []
             for i in row:
                 if i:
                     arr.append("*")
@@ -35,6 +35,7 @@ class Console(UI):
             self.life.step()
             sleep(2)
         curses.endwin()
+
 
 if __name__ == "__main__":
     life = GameOfLife((24, 102), max_gen=10)
