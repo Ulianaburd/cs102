@@ -20,7 +20,7 @@ class NaiveBayesClassifier:
             word_list = word_list.split()  # в потоке названий статей выделяем каждое слово
             for word in word_list:
                 if self.dictionary.get(
-                        word
+                    word
                 ):  # проверяем если это слово в словаре со всеми данными (слово, количество раз оно встречается)
                     self.dictionary[word][0][self.labels.index(y[id])] += 1  # счетчик определённого слова в классе
                 else:
@@ -35,7 +35,7 @@ class NaiveBayesClassifier:
         for word in self.dictionary:
             for id in range(len(self.dictionary[word][1])):
                 self.dictionary[word][1][id] = (self.alpha + self.dictionary[word][0][id]) / (
-                        self.alpha * len(self.dictionary) + labels[id]
+                    self.alpha * len(self.dictionary) + labels[id]
                 )
 
     def predict(self, X):

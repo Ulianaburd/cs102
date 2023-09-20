@@ -1,9 +1,10 @@
 import string
 
+from bottle import redirect, request, route, run, template  # type: ignore
+
 from bayes import NaiveBayesClassifier
-from bottle import redirect, request, route, run, template
 from db import News, session
-from scraputils import get_news
+from scraputils import get_news  # type: ignore
 
 
 @route("/news")
@@ -66,30 +67,27 @@ def classify_news():  # type: ignore
 
 @route("/recommendations")
 def recommendations():
-        X, y, info = [], [], []
-        s = session()
-        for i in range(1001):
-            for item in s.query(News).filter(News.id == i).all():
-                X.append(item.title)
-                y.append(item.label)
-        X_test = []
-        for i in range(1001, len(s.query(News).all()) + 1):
-            for item in s.query(News).filter(News.id == i).all():
-                X_test.append(item.title)
-                info.append(News(author=item.author,
-                                 points=item.points,
-                                 comments=item.comments,
-                                 url=item.url))
-        X = [x.translate(str.maketrans("", "", string.punctuation)).lower() for x in X]
-        X_cleared = [x.translate(str.maketrans("", "", string.punctuation)).lower() for x in X_test]
-        model = NaiveBayesClassifier(alpha=0.01)
-        model.fit(X, y)
-        predicted_news = model.predict(X_cleared)
-        classified_news = []
-        for i in range(len(predicted_news) - 1):
-            classified_news.append([y[i - 1], X_test[i - 1], info[i - 1]])
-        classified_news = sorted(classified_news, key=lambda item: item[0])
-        return template('news_recommendations', rows=classified_news)
+    X, y, info = [], [], []
+    s = session()
+    for i in range(1001):
+        for item in s.query(News).filter(News.id == i).all():
+            X.append(item.title)
+            y.append(item.label)
+    X_test = []
+    for i in range(1001, len(s.query(News).all()) + 1):
+        for item in s.query(News).filter(News.id == i).all():
+            X_test.append(item.title)
+            info.append(News(author=item.author, points=item.points, comments=item.comments, url=item.url))
+    X = [x.translate(str.maketrans("", "", string.punctuation)).lower() for x in X]
+    X_cleared = [x.translate(str.maketrans("", "", string.punctuation)).lower() for x in X_test]
+    model = NaiveBayesClassifier(alpha=0.01)
+    model.fit(X, y)
+    predicted_news = model.predict(X_cleared)
+    classified_news = []
+    for i in range(len(predicted_news) - 1):
+        classified_news.append([y[i - 1], X_test[i - 1], info[i - 1]])
+    classified_news = sorted(classified_news, key=lambda item: item[0])
+    return template("news_recommendations", rows=classified_news)
 
 
 if __name__ == "__main__":
