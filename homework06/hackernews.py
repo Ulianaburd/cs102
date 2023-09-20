@@ -31,7 +31,7 @@ def add_label():
 def update_news():
     news_s = get_news("https://news.ycombinator.com/newest", n_pages=5)
     s = session()
-    news_bd = s.query(News).all()
+    news_bd = s.query(News).all()  # fix
     news_bd = [(n.title, n.author) for n in news_bd]
     for new in news_s:
         if (new["title"], new["author"]) not in news_bd:
