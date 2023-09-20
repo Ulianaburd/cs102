@@ -27,7 +27,7 @@ def add_label():
         redirect("/news")
 
 
-@route("/update")  #fix
+@route("/update")
 def update_news():
     news_s = get_news("https://news.ycombinator.com/newest", n_pages=5)
     s = session()
