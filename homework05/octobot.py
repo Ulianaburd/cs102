@@ -1,14 +1,15 @@
 import json
+import re  # type: ignore
 import urllib.error
 import urllib.request
 from datetime import datetime, timedelta
 from time import sleep
 
-import validators  # type: ignore
+
 import gspread  # type: ignore
 import pandas as pd  # type: ignore
 import telebot  # type: ignore
-import re  # type: ignore
+import validators  # type: ignore
 
 bot = telebot.TeleBot("6232861707:AAFaLdsMLx3aQzd5oUxqeyFkWxouvCkYHX0")
 ROW, COL = None, None
