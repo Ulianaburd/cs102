@@ -4,7 +4,6 @@ import urllib.request
 from datetime import datetime, timedelta
 from time import sleep
 
-
 import gspread  # type: ignore
 import pandas as pd  # type: ignore
 import telebot  # type: ignore
