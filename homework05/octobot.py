@@ -4,10 +4,11 @@ import urllib.request
 from datetime import datetime, timedelta
 from time import sleep
 
+import validators  # type: ignore
 import gspread  # type: ignore
 import pandas as pd  # type: ignore
 import telebot  # type: ignore
-import validators  # type: ignore
+import re  # type: ignore
 
 bot = telebot.TeleBot("6232861707:AAFaLdsMLx3aQzd5oUxqeyFkWxouvCkYHX0")
 ROW, COL = None, None
@@ -38,10 +39,24 @@ def is_valid_date(date: str, divider: str = "/") -> bool:
 
 def is_valid_url(url: str = "") -> bool:
     """Проверяем, что ссылка рабочая"""
-    if validators.url(url) is True:
-        return validators.url(url)
-    else:
-        return validators.url("https://" + url)
+    pattern = re.compile(
+        r"^(?:(?:http)s?://)?"  # опциональная схема http:// или https://
+        r"(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|"  # домен
+        r"localhost|"  # localhost
+        r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})"  # ...или IP
+        r"(?::\d+)?"  # необязательный порт
+        r"(?:/?|[/?]\S+)$",
+        re.IGNORECASE,
+    )
+    if not pattern.match(url):
+        return False
+
+    # Проверка на поддомены без основного домена
+    domain_parts = url.split(".")
+    if len(domain_parts) == 2 and domain_parts[0].isalpha() and len(domain_parts[0]) == 2:
+        return False
+
+    return True
 
 
 def convert_date(date: str):
