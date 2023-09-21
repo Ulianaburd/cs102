@@ -38,15 +38,10 @@ def is_valid_date(date: str, divider: str = "/") -> bool:
 
 def is_valid_url(url: str = "") -> bool:
     """Проверяем, что ссылка рабочая"""
-    if not url.startswith("http://") and not url.startswith("https://"):
-        url = "http://" + url
-    try:
-        request = urllib.request.urlopen(url)
-        if request.getcode() == 200:
-            return True
-    except (ValueError, urllib.error.URLError):
-        pass
-    return False
+    if validators.url(url) is True:
+        return validators.url(url)
+    else:
+        return validators.url("https://" + url)
 
 
 def convert_date(date: str):
